@@ -1,0 +1,406 @@
+{
+  "seed": 7,
+  "note": "Hidden market used only by \"Simulate tomorrow\". The engine never reads it.",
+  "truth": [
+    {
+      "listingId": "ST01|amazon",
+      "archetype": "invisible",
+      "pRef": 137,
+      "base": 0.9838651816360652,
+      "eps": -1.6270138939842582,
+      "organicSessions": 25.998129647923633,
+      "adConv": 0.06659976811846718,
+      "cpc": 2.594733134843409
+    },
+    {
+      "listingId": "ST01|noon",
+      "archetype": "dog",
+      "pRef": 136,
+      "base": 0.06090783352265135,
+      "eps": -0.6578731114277616,
+      "organicSessions": 47.64115316560492,
+      "adConv": 0.004,
+      "cpc": 1.6574471715837718
+    },
+    {
+      "listingId": "ST02|amazon",
+      "archetype": "dog",
+      "pRef": 326,
+      "base": 0.25122936024563386,
+      "eps": -0.6878005432663485,
+      "organicSessions": 44.90416700253263,
+      "adConv": 0.004,
+      "cpc": 1.7085962378187105
+    },
+    {
+      "listingId": "ST02|noon",
+      "archetype": "hidden_demand",
+      "pRef": 323,
+      "base": 1.154068176052533,
+      "eps": -2.7892657967749983,
+      "organicSessions": 276.0137090552598,
+      "adConv": 0.020599796534515914,
+      "cpc": 1.9579859105870128
+    },
+    {
+      "listingId": "ST03|amazon",
+      "archetype": "healthy",
+      "pRef": 327,
+      "base": 2.620417660335079,
+      "eps": -1.8881422977894544,
+      "organicSessions": 155.0284954556264,
+      "adConv": 0.019277922911569476,
+      "cpc": 2.3393024965189397
+    },
+    {
+      "listingId": "ST03|noon",
+      "archetype": "healthy",
+      "pRef": 335,
+      "base": 2.6223566899541764,
+      "eps": -1.5394780995324253,
+      "organicSessions": 153.45678184647113,
+      "adConv": 0.013413572208955884,
+      "cpc": 1.6216956885531546
+    },
+    {
+      "listingId": "ST04|amazon",
+      "archetype": "invisible",
+      "pRef": 278,
+      "base": 1.2439626798965036,
+      "eps": -1.5783739922568203,
+      "organicSessions": 38.816049164161086,
+      "adConv": 0.06841054368531332,
+      "cpc": 2.4225183619419113
+    },
+    {
+      "listingId": "ST04|noon",
+      "archetype": "healthy",
+      "pRef": 270,
+      "base": 2.134375345800072,
+      "eps": -1.8341877600178123,
+      "organicSessions": 127.1685075131245,
+      "adConv": 0.019222229379229246,
+      "cpc": 1.1832257574424148
+    },
+    {
+      "listingId": "ST05|amazon",
+      "archetype": "dog",
+      "pRef": 310,
+      "base": 0.10874138599028811,
+      "eps": -0.71493867225945,
+      "organicSessions": 34.10437883809209,
+      "adConv": 0.004,
+      "cpc": 2.316610196256079
+    },
+    {
+      "listingId": "ST05|noon",
+      "archetype": "dog",
+      "pRef": 318,
+      "base": 0.21351007722551002,
+      "eps": -0.6698995205806568,
+      "organicSessions": 34.08544525736943,
+      "adConv": 0.004,
+      "cpc": 1.4234935206361117
+    },
+    {
+      "listingId": "ST06|amazon",
+      "archetype": "hidden_demand",
+      "pRef": 413,
+      "base": 0.8611767069902271,
+      "eps": -3.407687491038814,
+      "organicSessions": 236.9570939708501,
+      "adConv": 0.013890239004977047,
+      "cpc": 1.6707004148047417
+    },
+    {
+      "listingId": "ST06|noon",
+      "archetype": "healthy",
+      "pRef": 424,
+      "base": 2.387699392531067,
+      "eps": -1.996545179001987,
+      "organicSessions": 93.22501622373238,
+      "adConv": 0.019257550304755566,
+      "cpc": 2.1453213444910944
+    },
+    {
+      "listingId": "ST07|amazon",
+      "archetype": "healthy",
+      "pRef": 183,
+      "base": 2.734890917036682,
+      "eps": -1.4015721833333372,
+      "organicSessions": 123.34750071633607,
+      "adConv": 0.02125258399173617,
+      "cpc": 1.6336425055051222
+    },
+    {
+      "listingId": "ST07|noon",
+      "archetype": "dog",
+      "pRef": 188,
+      "base": 0.16203061731066554,
+      "eps": -0.7673698734724894,
+      "organicSessions": 32.913652246352285,
+      "adConv": 0.004,
+      "cpc": 1.5825261011719705
+    },
+    {
+      "listingId": "ST08|amazon",
+      "archetype": "invisible",
+      "pRef": 195,
+      "base": 1.2010281561175362,
+      "eps": -1.921032034419477,
+      "organicSessions": 29.367741394089535,
+      "adConv": 0.05805728627601639,
+      "cpc": 2.540871527278796
+    },
+    {
+      "listingId": "ST08|noon",
+      "archetype": "dog",
+      "pRef": 196,
+      "base": 0.29153357482282444,
+      "eps": -0.7417200966738164,
+      "organicSessions": 37.57235520519316,
+      "adConv": 0.004,
+      "cpc": 2.121119196712971
+    },
+    {
+      "listingId": "ST09|amazon",
+      "archetype": "healthy",
+      "pRef": 382,
+      "base": 2.670030711055733,
+      "eps": -1.7574945503845811,
+      "organicSessions": 94.55303626600653,
+      "adConv": 0.02802143555134535,
+      "cpc": 1.6156505163526163
+    },
+    {
+      "listingId": "ST09|noon",
+      "archetype": "healthy",
+      "pRef": 385,
+      "base": 2.6277686128858475,
+      "eps": -1.4018469713628292,
+      "organicSessions": 103.72571307700127,
+      "adConv": 0.013725189557299018,
+      "cpc": 1.4018404476344586
+    },
+    {
+      "listingId": "ST10|amazon",
+      "archetype": "invisible",
+      "pRef": 275,
+      "base": 1.2034417373361066,
+      "eps": -1.8320639096200466,
+      "organicSessions": 36.70057034352794,
+      "adConv": 0.05426115893060342,
+      "cpc": 2.303180987597443
+    },
+    {
+      "listingId": "ST10|noon",
+      "archetype": "healthy",
+      "pRef": 282,
+      "base": 3.34271882539615,
+      "eps": -1.6377530530095101,
+      "organicSessions": 111.04034374002367,
+      "adConv": 0.02255854232702404,
+      "cpc": 1.3829470670782031
+    },
+    {
+      "listingId": "ST11|amazon",
+      "archetype": "healthy",
+      "pRef": 147,
+      "base": 2.498417761572637,
+      "eps": -1.249807247146964,
+      "organicSessions": 138.6401107837446,
+      "adConv": 0.01304045086260885,
+      "cpc": 1.980875075678341
+    },
+    {
+      "listingId": "ST11|noon",
+      "archetype": "healthy",
+      "pRef": 149,
+      "base": 3.4839325115084647,
+      "eps": -1.7626176469027997,
+      "organicSessions": 138.54712016880512,
+      "adConv": 0.025794276087544858,
+      "cpc": 1.7702177612110974
+    },
+    {
+      "listingId": "ST12|amazon",
+      "archetype": "invisible",
+      "pRef": 242,
+      "base": 0.9772989355726167,
+      "eps": -1.4255847388878464,
+      "organicSessions": 26.589745567180216,
+      "adConv": 0.07363472455414012,
+      "cpc": 2.5619299326790497
+    },
+    {
+      "listingId": "ST12|noon",
+      "archetype": "healthy",
+      "pRef": 235,
+      "base": 2.137512188707478,
+      "eps": -1.646974078565836,
+      "organicSessions": 167.59900432778522,
+      "adConv": 0.010927273835986852,
+      "cpc": 2.0122477983124556
+    },
+    {
+      "listingId": "ST13|amazon",
+      "archetype": "invisible",
+      "pRef": 193,
+      "base": 1.08646497069858,
+      "eps": -1.9005581121891737,
+      "organicSessions": 35.02274425001815,
+      "adConv": 0.0619539906969294,
+      "cpc": 1.7664556154049933
+    },
+    {
+      "listingId": "ST13|noon",
+      "archetype": "healthy",
+      "pRef": 198,
+      "base": 2.57358203495387,
+      "eps": -1.4588401639834045,
+      "organicSessions": 165.86709392024204,
+      "adConv": 0.02298619964160025,
+      "cpc": 1.6337708678096534
+    },
+    {
+      "listingId": "ST14|amazon",
+      "archetype": "hidden_demand",
+      "pRef": 191,
+      "base": 1.1949390642344953,
+      "eps": -2.5431350579019636,
+      "organicSessions": 187.0167649537325,
+      "adConv": 0.02699731661006808,
+      "cpc": 1.5543634422356263
+    },
+    {
+      "listingId": "ST14|noon",
+      "archetype": "dog",
+      "pRef": 187,
+      "base": 0.07231055934680626,
+      "eps": -0.8292452320456505,
+      "organicSessions": 49.0249689319171,
+      "adConv": 0.004,
+      "cpc": 1.7538301223888995
+    },
+    {
+      "listingId": "ST15|amazon",
+      "archetype": "hidden_demand",
+      "pRef": 204,
+      "base": 0.7444788914173841,
+      "eps": -3.412719185464084,
+      "organicSessions": 251.92601876333356,
+      "adConv": 0.014252153690904379,
+      "cpc": 1.6922949022846296
+    },
+    {
+      "listingId": "ST15|noon",
+      "archetype": "dog",
+      "pRef": 199,
+      "base": 0.2656144082546234,
+      "eps": -0.6602510152151808,
+      "organicSessions": 32.18663164880127,
+      "adConv": 0.004,
+      "cpc": 1.3395114106126131
+    },
+    {
+      "listingId": "ST16|amazon",
+      "archetype": "dog",
+      "pRef": 157,
+      "base": 0.2283637613407336,
+      "eps": -0.8208911090623587,
+      "organicSessions": 29.966285650152713,
+      "adConv": 0.004,
+      "cpc": 2.110496084438637
+    },
+    {
+      "listingId": "ST16|noon",
+      "archetype": "dog",
+      "pRef": 153,
+      "base": 0.05047915172763169,
+      "eps": -0.8467634968692437,
+      "organicSessions": 49.39230299554765,
+      "adConv": 0.004,
+      "cpc": 1.6529725059866907
+    },
+    {
+      "listingId": "ST17|amazon",
+      "archetype": "hidden_demand",
+      "pRef": 233,
+      "base": 1.1759666033321992,
+      "eps": -2.545882548438385,
+      "organicSessions": 205.5174980778247,
+      "adConv": 0.01624781132210046,
+      "cpc": 1.9726320396875963
+    },
+    {
+      "listingId": "ST17|noon",
+      "archetype": "healthy",
+      "pRef": 240,
+      "base": 3.115733798011206,
+      "eps": -1.2934770196676255,
+      "organicSessions": 176.38984307879582,
+      "adConv": 0.02513909759931266,
+      "cpc": 1.8186536425724626
+    },
+    {
+      "listingId": "ST18|amazon",
+      "archetype": "healthy",
+      "pRef": 244,
+      "base": 2.2095399615587668,
+      "eps": -1.4608737042173743,
+      "organicSessions": 154.68227750854567,
+      "adConv": 0.016795842926949262,
+      "cpc": 1.9870973521610722
+    },
+    {
+      "listingId": "ST18|noon",
+      "archetype": "healthy",
+      "pRef": 251,
+      "base": 2.6628785016946495,
+      "eps": -1.6972538886591793,
+      "organicSessions": 108.71765546500683,
+      "adConv": 0.017460862826555967,
+      "cpc": 2.022175696305931
+    },
+    {
+      "listingId": "ST19|amazon",
+      "archetype": "dog",
+      "pRef": 441,
+      "base": 0.05808235711883754,
+      "eps": -0.727372091379948,
+      "organicSessions": 24.518199854064733,
+      "adConv": 0.004,
+      "cpc": 2.168133389786817
+    },
+    {
+      "listingId": "ST19|noon",
+      "archetype": "healthy",
+      "pRef": 440,
+      "base": 2.9701516398927197,
+      "eps": -1.4990521611645817,
+      "organicSessions": 105.00283007277176,
+      "adConv": 0.015118534979410469,
+      "cpc": 1.8464563533663751
+    },
+    {
+      "listingId": "ST20|amazon",
+      "archetype": "invisible",
+      "pRef": 331,
+      "base": 0.8074816602980718,
+      "eps": -1.3558530746027828,
+      "organicSessions": 22.328965032938868,
+      "adConv": 0.06869734389940277,
+      "cpc": 2.001412269542925
+    },
+    {
+      "listingId": "ST20|noon",
+      "archetype": "healthy",
+      "pRef": 330,
+      "base": 2.38190343726892,
+      "eps": -1.356270912848413,
+      "organicSessions": 138.52023031096905,
+      "adConv": 0.021675506466999648,
+      "cpc": 1.4955379355698826
+    }
+  ]
+}
