@@ -9,7 +9,7 @@ so the tool sells online only while that beats the jobber.
 
 Needs Node.js 22 or newer and npm.
 
-1. `git clone https://github.com/nexttokenlab/liquidation-copilot.git && cd liquidation-copilot && npm install`
+1. `git clone https://github.com/nexttokenlab/liquidation-tool.git && cd liquidation-tool && npm install`
 2. Optional, for the morning note: `cp .env.example .env.local` and add a `GEMINI_API_KEY` (or `ANTHROPIC_API_KEY`).
    Without a key everything else works and the note shows the table instead.
 3. `npm run dev`, open http://localhost:3000, go to **Data** and click **Use sample data** (or load your three CSVs).
