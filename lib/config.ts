@@ -23,7 +23,6 @@ export const DEFAULT_SETTINGS = {
   learningRate: 0.3, // own listing
   pooledLearningRate: 0.1, // channel-level prior
   priceSteps: [-0.05, -0.1, -0.2], // relative to current price
-  raiseStep: 0.05, // offered only when ahead of pace
   smallStepLimit: -0.1, // max cut while price sensitivity is unproven
   adSteps: [0, 20, 50, 100, 150], // AED/day per listing
   maxAdPerListing: 150,

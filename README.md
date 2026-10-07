@@ -44,8 +44,9 @@ Built so Farah can act within 60 seconds:
    estimates move partway toward reality: price response by 30% of the gap, scaled down for small price moves; ad lift likewise.
    A pooled per-channel price response moves by 10%.
 3. **Status.** Needed pace (units left ÷ days left) against the last 7 days' actual pace: Ahead, On track, Behind.
-4. **Candidates.** Keep, price −5/−10/−20% or to floor (only ≤10% until a listing's price response is proven),
-   +5% when ahead, ads 0/20/50/100/150 AED a day, or exit to the jobber now.
+4. **Candidates by status.** *Behind:* keep, price −5/−10/−20% or to floor (only ≤10% until a listing's price response
+   is proven), ads 0/20/50/100/150 AED a day, or exit to the jobber now. *On track:* no change. *Ahead:* price stays put
+   (only 2 changes a week) and ads can only go down. A partner listing's price move can still force a parity change.
 5. **Rule gate.** Price is chosen jointly for both channels of a style, so the Noon ±5% parity always holds. Also checked:
    floor, 2 price changes per rolling 7 days, per-channel daily ad budget (AED 1,500 Amazon, AED 1,000 Noon), no ads on zero stock.
    Apply re-checks the gate against the current state.
@@ -77,10 +78,6 @@ Built so Farah can act within 60 seconds:
   The LLM writes only the three-line morning note.
 - **"Will we make it?" is a single projection, not a range.** Pairs left on 3 Dec and their jobber value are one number;
   a credible range needs more than 14 days of history (see "What I cut").
-- **On-track listings are scored too.** The note left them alone. Every listing is scored the same way, so an On-track
-  listing gets an action only when it recovers more money, most often stopping ads that only speed up sales it would make anyway.
-- **Ahead listings can get a +5% price raise, not only less ad spend.** It is offered only when the extra margin outweighs
-  the slower sales and the 7-day limit allows it; the lock state is shown on the listing.
 - **Ad response starts at face value, not discounted.** With no ad-attributed sales in the data, any discount would be a guess,
   so ad clicks are assumed to convert like the listing's own visits. The daily learning step corrects this once applied ad
   changes are observed.
@@ -93,7 +90,7 @@ Built so Farah can act within 60 seconds:
 - Ad lift = (ad AED ÷ cost per click) × the listing's own conversion. Ad clicks are assumed to convert like organic sessions.
 - A price change takes effect the day after Apply; past changes are read from the history for the 7-day rule.
 - Prices are whole dirhams. A jobber exit is never applied implicitly; it always needs its own click.
-- MRP only caps price raises. If `constraints.csv` has no MRP column, it defaults to 4 × the floor.
+- MRP is shown for reference only; the tool never raises a price. If `constraints.csv` has no MRP column, it defaults to 4 × the floor.
 
 ## Sample data
 

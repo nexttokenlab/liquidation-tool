@@ -28,14 +28,22 @@ function scoreAt(l: Listing, est: Estimate, price: number, ad: number, state: St
 
 const adLevels = (state: State) => state.settings.adSteps.filter((a) => a <= state.settings.maxAdPerListing);
 
-function bestWithAds(l: Listing, est: Estimate, price: number, state: State): Scored {
-  let best = scoreAt(l, est, price, 0, state);
-  if (l.unitsLeft <= 0) return best;
-  for (const a of adLevels(state)) {
+function bestWithAds(l: Listing, est: Estimate, price: number, state: State, levels = adLevels(state)): Scored {
+  if (l.unitsLeft <= 0) return scoreAt(l, est, price, 0, state);
+  let best: Scored | null = null;
+  for (const a of levels) {
     const sc = scoreAt(l, est, price, a, state);
-    if (sc.value > best.value) best = sc;
+    if (!best || sc.value > best.value) best = sc;
   }
-  return best;
+  return best ?? scoreAt(l, est, price, 0, state);
+}
+
+// Approach note: On-track listings keep their ads; Ahead listings may only spend less; Behind listings choose freely.
+function adChoices(l: Listing, status: Status, state: State): number[] {
+  if (status === 'on_track') return [l.adSpendPerDay];
+  const all = adLevels(state);
+  if (status !== 'ahead') return all;
+  return [...new Set([...all.filter((a) => a <= l.adSpendPerDay), l.adSpendPerDay])].sort((x, y) => x - y);
 }
 
 function statusOf(l: Listing, est: Estimate, D: number, band: number): { status: Status; needed: number } {
@@ -57,17 +65,18 @@ function dedupe(opts: Opt[]) {
 }
 
 // Candidate prices for one listing. Small steps only while price response is unproven.
-function priceOptions(l: Listing, est: Estimate, ahead: boolean, state: State): Opt[] {
+// Approach note: only Behind listings get price cuts or a jobber exit; On-track and Ahead listings
+// keep their price (2 changes a week are scarce), unless a partner's move forces one for parity.
+function priceOptions(l: Listing, est: Estimate, status: Status, state: State): Opt[] {
   if (l.delisted) return [{ kind: 'delisted', price: l.price }];
   const opts: Opt[] = [{ kind: 'keep', price: l.price }];
-  if (l.unitsLeft <= 0) return opts;
+  if (l.unitsLeft <= 0 || status !== 'behind') return opts;
   const s = state.settings;
   if (canChangePrice(l, effectiveDate(state.today), s)) {
     const proven = est.elasticitySource === 'own';
     const steps = s.priceSteps.filter((st) => proven || st >= s.smallStepLimit - 1e-9);
     const prices = steps.map((st) => roundPrice(l.price * (1 + st), l.floor));
     if (proven || l.floor >= l.price * (1 + s.smallStepLimit)) prices.push(roundPrice(l.floor, l.floor));
-    if (ahead && l.price < l.mrp) prices.push(Math.min(l.mrp, roundPrice(l.price * (1 + s.raiseStep), l.floor)));
     for (const p of prices) if (Math.abs(p - l.price) > PRICE_EPS && p + PRICE_EPS >= l.floor) opts.push({ kind: 'price', price: p });
   }
   opts.push({ kind: 'jobber', price: l.price });
@@ -82,6 +91,8 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
   const est = state.estimates;
   const eff = effectiveDate(state.today);
   const peers = peerMedians(state.listings, est);
+  const statusById = new Map(state.listings.map((l) => [l.id, statusOf(l, est[l.id], D, s.statusBand).status]));
+  const statusOfId = (l: Listing) => statusById.get(l.id)!;
   const byStyle = new Map<string, Listing[]>();
   for (const l of state.listings) {
     if (!byStyle.has(l.styleId)) byStyle.set(l.styleId, []);
@@ -92,7 +103,7 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
     if (o.kind === 'delisted') return ZERO;
     if (o.kind === 'jobber') return { ...ZERO, value: jobberNowValue(l.unitsLeft, l.unitCost, s.jobberRate) };
     if (state.applied[l.id]) return scoreAt(l, est[l.id], l.price, l.adSpendPerDay, state);
-    return bestWithAds(l, est[l.id], o.price, state);
+    return bestWithAds(l, est[l.id], o.price, state, adChoices(l, statusOfId(l), state));
   }
 
   // ---- Stage 1: choose price (or exit) jointly per style, so parity always holds.
@@ -104,8 +115,7 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
     const optsFor = (l: Listing | undefined): Opt[] => {
       if (!l) return [];
       if (fixed(l)) return [{ kind: l.delisted ? 'delisted' : 'keep', price: l.price }];
-      const e = est[l.id];
-      return priceOptions(l, e, statusOf(l, e, D, s.statusBand).status === 'ahead', state);
+      return priceOptions(l, est[l.id], statusOfId(l), state);
     };
     const aOpts = optsFor(a);
     let nOpts = optsFor(n);
@@ -159,20 +169,22 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
   for (const ch of ['amazon', 'noon'] as Channel[]) {
     const ls = state.listings.filter((l) => l.channel === ch);
     let budget = s.adBudget[ch];
+    // Applied and On-track listings keep their current ads; the rest of the budget is shared out.
+    const holds = (l: Listing) => !!state.applied[l.id] || (statusOfId(l) === 'on_track' && !l.delisted && l.unitsLeft > 0);
     for (const l of ls) {
-      if (state.applied[l.id]) {
+      if (holds(l)) {
         adPlan.set(l.id, l.adSpendPerDay);
         budget -= l.adSpendPerDay;
       } else adPlan.set(l.id, 0);
     }
-    const eligible = ls.filter((l) => !state.applied[l.id] && isPriced(plan.get(l.id)!.opt) && l.unitsLeft > 0 && !l.delisted);
+    const eligible = ls.filter((l) => !holds(l) && isPriced(plan.get(l.id)!.opt) && l.unitsLeft > 0 && !l.delisted);
     for (let guard = 0; guard < 500; guard++) {
       let pick: { l: Listing; ad: number; ratio: number } | null = null;
       for (const l of eligible) {
         const cur = adPlan.get(l.id)!;
         const price = plan.get(l.id)!.opt.price;
         const base = scoreAt(l, est[l.id], price, cur, state).value;
-        for (const a of adLevels(state)) {
+        for (const a of adChoices(l, statusOfId(l), state)) {
           if (a <= cur || a - cur > budget + 1e-9) continue;
           const gain = scoreAt(l, est[l.id], price, a, state).value - base;
           const ratio = gain / (a - cur);
@@ -214,7 +226,7 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
       toAd = l.unitsLeft > 0 ? adPlan.get(l.id) ?? 0 : 0;
       final = scoreAt(l, e, toPrice, toAd, state);
       const jobber = jobberNowValue(l.unitsLeft, l.unitCost, s.jobberRate);
-      if (l.unitsLeft > 0 && jobber > final.value + 1e-6) {
+      if (status === 'behind' && l.unitsLeft > 0 && jobber > final.value + 1e-6) {
         kind = 'jobber';
         toPrice = l.price;
         toAd = 0;
@@ -227,7 +239,7 @@ export function recommend(state: State): { actions: Action[]; headline: Headline
     }
     if (kind === 'jobber') {
       // Best legal online plan, for comparison with exiting now.
-      const plans = priceOptions(l, e, false, state).filter(isPriced).map((o) => bestWithAds(l, e, o.price, state));
+      const plans = priceOptions(l, e, status, state).filter(isPriced).map((o) => bestWithAds(l, e, o.price, state));
       online = plans.reduce((b, x) => (x.value > b.value ? x : b), plans[0] ?? ZERO);
     }
     const conf: Confidence =
@@ -361,9 +373,13 @@ function explain(
       }
       return out;
     default:
-      add('Why', canChangePrice(l, effectiveDate(state.today), s)
-        ? `${standing}: ${pace}. Current price and ads already give the best result.`
-        : `Price locked: ${s.maxPriceChangesPer7d} changes in the last 7 days.`);
+      add('Why', status === 'on_track'
+        ? `${standing}: ${pace}. No change needed today.`
+        : status === 'ahead'
+          ? `${standing}: ${pace}. Price stays put to save the ${s.maxPriceChangesPer7d} price changes a week${l.adSpendPerDay > 0 ? ', and its ads still pay back' : ''}.`
+          : canChangePrice(l, effectiveDate(state.today), s)
+            ? `${standing}: ${pace}. Current price and ads already give the best result.`
+            : `Price locked: ${s.maxPriceChangesPer7d} changes in the last 7 days.`);
       return out;
   }
 }
